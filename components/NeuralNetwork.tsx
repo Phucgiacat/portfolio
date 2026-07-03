@@ -96,6 +96,7 @@ export function NeuralNetwork() {
             count={particlesCount}
             array={positions}
             itemSize={3}
+            args={[positions, 3]}
           />
         </bufferGeometry>
         <pointsMaterial
