@@ -31,7 +31,7 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
     width: "100%",
     maxWidth: "900px",
     pointerEvents: "auto" as any, // allow clicking inside panel
-    maxHeight: "80vh",
+    maxHeight: "75vh",
     overflowY: "auto" as any,
   };
 
@@ -113,7 +113,7 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
 
       <AnimatePresence mode="wait">
         {currentPage === 'Home' && (
-          <motion.section key="home" variants={pageVariants} initial="initial" animate="animate" exit="exit" style={containerStyle}>
+          <motion.section key="home" variants={pageVariants} initial="initial" animate="animate" exit="exit" style={{...containerStyle, alignItems: "flex-start", justifyContent: "center"}}>
             <div style={{ ...panelStyle, display: "flex", gap: "2rem", alignItems: "center", flexWrap: "wrap", maxWidth: "800px" }}>
               <motion.div 
                 whileHover={{ scale: 1.1, rotate: 5 }}
@@ -168,8 +168,10 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
                 </h3>
                 <p style={{ color: "var(--text-secondary)", fontSize: "1rem", fontStyle: "italic", marginBottom: "0.5rem" }}>TRUNG VIET INVESTMENT</p>
                 <ul style={{ color: "var(--text-secondary)", fontSize: "0.95rem", lineHeight: 1.5, marginLeft: "1.5rem" }}>
-                  <li>Deployed AI solutions into production to support internal business operations.</li>
+                  <li>Deployed AI solutions into production to support internal business operations, from data ingestion to automated response generation.</li>
                   <li>Built an automated AI video-generation pipeline, cutting content-production time by 50%.</li>
+                  <li>Designed and implemented end-to-end data-processing workflows to structure raw business data for downstream AI applications.</li>
+                  <li>Built a chatbot website (frontend + backend) integrated with LLM APIs to handle customer inquiries in real time.</li>
                 </ul>
               </div>
               
@@ -180,8 +182,9 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
                 </h3>
                 <p style={{ color: "var(--text-secondary)", fontSize: "1rem", fontStyle: "italic", marginBottom: "0.5rem" }}>NLP & AI Lab, University of Science</p>
                 <ul style={{ color: "var(--text-secondary)", fontSize: "0.95rem", lineHeight: 1.5, marginLeft: "1.5rem" }}>
-                  <li>Built an automated OCR pipeline cutting manual processing time by 60%.</li>
-                  <li>Mentored 3 juniors and introduced a code-review workflow that cut integration bugs by 15%.</li>
+                  <li>Built an automated OCR pipeline that turns financial documents into structured, query-ready data, cutting manual processing time by 60% and improving accuracy by 20%.</li>
+                  <li>Created data-validation and annotation tooling that lifted team throughput by 30% while keeping training data clean and representative.</li>
+                  <li>Mentored 3 juniors, owned the team's Git codebase, and introduced a code-review workflow that cut integration bugs by 15%.</li>
                 </ul>
               </div>
 
@@ -192,7 +195,10 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
                 </h3>
                 <p style={{ color: "var(--text-secondary)", fontSize: "1rem", fontStyle: "italic", marginBottom: "0.5rem" }}>Wooda</p>
                 <ul style={{ color: "var(--text-secondary)", fontSize: "0.95rem", lineHeight: 1.5, marginLeft: "1.5rem" }}>
-                  <li>Built and deployed a customer-facing conversational AI system reducing average response time by 40%.</li>
+                  <li>Built and deployed a customer-facing conversational AI system, automating support interactions and reducing average response time by 40%.</li>
+                  <li>Integrated support agents into the platform to handle multi-step user requests end-to-end, improving first-contact resolution rate by 25%.</li>
+                  <li>Developed and maintained custom AI skills to extend agent capabilities for domain-specific tasks such as order tracking, FAQ handling, and issue escalation.</li>
+                  <li>Built data-processing pipelines to structure enterprise data, ensuring the AI system delivered consistent, reliable responses at scale.</li>
                 </ul>
               </div>
             </div>
@@ -299,6 +305,27 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
                     </p>
                   </div>
                 </div>
+
+                <hr style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }} />
+
+                <div>
+                    <h3 style={{ fontSize: "1.3rem", color: "#fff", marginBottom: "1rem", textAlign: "center" }}>🏅 Academic Achievements</h3>
+                    <div style={{ display: "flex", gap: "1rem", overflowX: "auto", paddingBottom: "10px", justifyContent: "center" }}>
+                      <div style={{ textAlign: "center" }}>
+                        <img src="/image/Giải ba cuộc thi khoa học kỹ thuật.jpg" style={{ height: "150px", borderRadius: "8px", objectFit: "cover", border: "1px solid rgba(255,255,255,0.1)" }} />
+                        <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: "0.5rem" }}>3rd Prize - Provincial Science Fair</p>
+                      </div>
+                      <div style={{ textAlign: "center" }}>
+                        <img src="/image/Học Sinh giỏi toán.jpg" style={{ height: "150px", borderRadius: "8px", objectFit: "cover", border: "1px solid rgba(255,255,255,0.1)" }} />
+                        <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: "0.5rem" }}>Excellent Student in Math</p>
+                      </div>
+                      <div style={{ textAlign: "center" }}>
+                        <img src="/image/Học bổng khuyến học 2021-2022.jpg" style={{ height: "150px", borderRadius: "8px", objectFit: "cover", border: "1px solid rgba(255,255,255,0.1)" }} />
+                        <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: "0.5rem" }}>Study Encouragement Scholarship</p>
+                      </div>
+                    </div>
+                </div>
+
               </div>
             </div>
           </motion.section>
