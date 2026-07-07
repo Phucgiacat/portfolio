@@ -207,39 +207,70 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
 
         {currentPage === 'Projects' && (
           <motion.section key="projects" variants={pageVariants} initial="initial" animate="animate" exit="exit" style={containerStyle}>
-            <div style={{...panelStyle, display: "flex", flexDirection: "column", gap: "2rem"}}>
-              <div>
-                <h3 style={{ fontSize: "1.3rem", color: "#fff", display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
-                  Home Credit - Credit Risk Model
-                  <span style={{ fontSize: "1rem", color: "var(--accent-color)", fontWeight: "normal" }}>Jun 2026</span>
-                </h3>
-                <ul style={{ color: "var(--text-secondary)", fontSize: "0.95rem", lineHeight: 1.6, marginLeft: "1.5rem", marginTop: "0.5rem" }}>
-                  <li>Built and evaluated gradient-boosting models to predict client repayment, holding performance stable as data distributions shifted.</li>
-                  <li><strong>Tech:</strong> Python, pandas, scikit-learn, LightGBM, XGBoost</li>
-                </ul>
+            <div style={{...panelStyle, display: "flex", flexDirection: "column", gap: "1.5rem", maxWidth: "1000px"}}>
+              
+              <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", background: "rgba(255,255,255,0.03)", padding: "1.5rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.1)" }}>
+                <img src="/image/projects/ai_agent_db_1783425925918.png" style={{ width: "220px", height: "150px", objectFit: "cover", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.2)" }} />
+                <div style={{ flex: 1, minWidth: "250px" }}>
+                  <h3 style={{ fontSize: "1.2rem", color: "#fff", display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
+                    Enterprise Database & Reporting Automation (AI Agent)
+                    <span style={{ fontSize: "0.9rem", color: "var(--accent-color)", fontWeight: "normal" }}>May 2026</span>
+                  </h3>
+                  <ul style={{ color: "var(--text-secondary)", fontSize: "0.95rem", lineHeight: 1.5, marginLeft: "1.5rem", marginTop: "0.5rem" }}>
+                    <li>Built an AI agent that automates SQL querying and financial-report generation across enterprise databases, cutting manual data-retrieval time by 40%.</li>
+                    <li>Integrated the agent with internal dashboards and led a 2-person team to define business use cases.</li>
+                    <li><strong>Tech:</strong> OpenClaw, Python, SQL, LangChain, LLM APIs</li>
+                  </ul>
+                </div>
               </div>
 
-              <div>
-                <h3 style={{ fontSize: "1.3rem", color: "#fff", display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
-                  Enterprise Database & Reporting Automation
-                  <span style={{ fontSize: "1rem", color: "var(--accent-color)", fontWeight: "normal" }}>May 2026</span>
-                </h3>
-                <ul style={{ color: "var(--text-secondary)", fontSize: "0.95rem", lineHeight: 1.6, marginLeft: "1.5rem", marginTop: "0.5rem" }}>
-                  <li>Built an AI agent that automates SQL querying and financial reporting, cutting manual data-retrieval time by 40%.</li>
-                  <li><strong>Tech:</strong> Python, SQL, LangChain, LLM APIs</li>
-                </ul>
+              <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", background: "rgba(255,255,255,0.03)", padding: "1.5rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.1)" }}>
+                <img src="/image/projects/kyc_fintech_1783425937612.png" style={{ width: "220px", height: "150px", objectFit: "cover", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.2)" }} />
+                <div style={{ flex: 1, minWidth: "250px" }}>
+                  <h3 style={{ fontSize: "1.2rem", color: "#fff", display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
+                    KYC Document Understanding for Fintech
+                    <span style={{ fontSize: "0.9rem", color: "var(--accent-color)", fontWeight: "normal" }}>Oct 2025 – Nov 2025</span>
+                  </h3>
+                  <ul style={{ color: "var(--text-secondary)", fontSize: "0.95rem", lineHeight: 1.5, marginLeft: "1.5rem", marginTop: "0.5rem" }}>
+                    <li>Built a system to automatically extract key fields from Vietnamese financial and identity documents (invoices, ID cards).</li>
+                    <li>Tuned document-understanding models to parse complex table structures, reaching 92% F1 on a held-out test set.</li>
+                    <li><strong>Tech:</strong> Python, PyTorch, OCR/VLM, Gradio</li>
+                    <li><strong>Link:</strong> <a href="https://github.com/Phucgiacat/CoverHackatho-project" target="_blank" style={{ color: "#3b82f6" }}>github.com/Phucgiacat/CoverHackatho-project</a></li>
+                  </ul>
+                </div>
               </div>
 
-              <div>
-                <h3 style={{ fontSize: "1.3rem", color: "#fff", display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
-                  KYC Document Understanding for Fintech
-                  <span style={{ fontSize: "1rem", color: "var(--accent-color)", fontWeight: "normal" }}>Oct 2025</span>
-                </h3>
-                <ul style={{ color: "var(--text-secondary)", fontSize: "0.95rem", lineHeight: 1.6, marginLeft: "1.5rem", marginTop: "0.5rem" }}>
-                  <li>Built a system that extracts key fields from Vietnamese financial documents, reaching 92% F1 on test set.</li>
-                  <li><strong>Tech:</strong> Python, PyTorch, OCR/VLM, Gradio</li>
-                </ul>
+              <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", background: "rgba(255,255,255,0.03)", padding: "1.5rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.1)" }}>
+                <img src="/image/projects/risk_model_1783425947474.png" style={{ width: "220px", height: "150px", objectFit: "cover", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.2)" }} />
+                <div style={{ flex: 1, minWidth: "250px" }}>
+                  <h3 style={{ fontSize: "1.2rem", color: "#fff", display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
+                    Model Reliability for Risk-Sensitive Applications
+                    <span style={{ fontSize: "0.9rem", color: "var(--accent-color)", fontWeight: "normal" }}>Aug 2025 – Oct 2025</span>
+                  </h3>
+                  <ul style={{ color: "var(--text-secondary)", fontSize: "0.95rem", lineHeight: 1.5, marginLeft: "1.5rem", marginTop: "0.5rem" }}>
+                    <li>Designed a reward model to detect factual errors in model outputs, targeting reliability for risk-sensitive domains such as finance.</li>
+                    <li>Built automated evaluation pipelines to measure error rates across model versions, reaching 86% accuracy and reducing false positives by 18%.</li>
+                    <li><strong>Link:</strong> <a href="https://github.com/monster1909/Detect-hallucination-using-LoRa-and-GRPO" target="_blank" style={{ color: "#3b82f6" }}>GitHub Repository</a></li>
+                  </ul>
+                </div>
               </div>
+
+              <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", background: "rgba(255,255,255,0.03)", padding: "1.5rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.1)" }}>
+                <img src="/image/projects/data_pipeline_1783425957299.png" style={{ width: "220px", height: "150px", objectFit: "cover", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.2)" }} />
+                <div style={{ flex: 1, minWidth: "250px" }}>
+                  <h3 style={{ fontSize: "1.2rem", color: "#fff", display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
+                    End-to-End Data Labeling Pipeline (Published)
+                    <span style={{ fontSize: "0.9rem", color: "var(--accent-color)", fontWeight: "normal" }}>Feb 2024 – Aug 2024</span>
+                  </h3>
+                  <ul style={{ color: "var(--text-secondary)", fontSize: "0.95rem", lineHeight: 1.5, marginLeft: "1.5rem", marginTop: "0.5rem" }}>
+                    <li>Built an automated data-labeling system (OCR + CV) reaching 90% character-level accuracy and cutting annotation workload by 60%.</li>
+                    <li>Implemented an error-correction algorithm (Levenshtein matching) to improve data quality for downstream models.</li>
+                    <li>Published a paper on the methodology at VCL 2025.</li>
+                    <li><strong>Link:</strong> <a href="https://github.com/Phucgiacat/ocr_corrector" target="_blank" style={{ color: "#3b82f6" }}>github.com/Phucgiacat/ocr_corrector</a></li>
+                  </ul>
+                </div>
+              </div>
+
             </div>
           </motion.section>
         )}
