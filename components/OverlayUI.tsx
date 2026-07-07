@@ -100,7 +100,9 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
                 padding: "5px 10px",
                 borderRadius: "15px",
                 background: isActive ? "rgba(59, 130, 246, 0.3)" : "transparent",
-                transition: "all 0.3s ease"
+                transition: "all 0.3s ease",
+                whiteSpace: "nowrap",
+                flexShrink: 0
               }}
               onMouseOver={(e) => {
                 if (!isActive) e.currentTarget.style.color = '#fff';
