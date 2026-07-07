@@ -15,18 +15,22 @@ function CameraAnimation() {
   useFrame((state) => {
     const offset = scroll.offset; // 0 to 1 over 8 pages
     
-    // Abstract space camera positions for 8 sections
+    // Abstract space camera positions for 12 sections
     const p1 = new THREE.Vector3(0, 0, 4);      // 1. Hero
-    const p2 = new THREE.Vector3(5, 3, 2);      // 2. Edu/Skills
-    const p3 = new THREE.Vector3(8, 0, -2);     // 3. Exp 1
-    const p4 = new THREE.Vector3(4, -4, -6);    // 4. Exp 2
-    const p5 = new THREE.Vector3(-4, -2, -8);   // 5. Proj 1
-    const p6 = new THREE.Vector3(-8, 3, -4);    // 6. Proj 2
-    const p7 = new THREE.Vector3(-6, 6, 2);     // 7. Achievements
-    const p8 = new THREE.Vector3(0, 0, -3);     // 8. Contact
+    const p2 = new THREE.Vector3(-4, 2, 2);     // 2. Vision / Personality
+    const p3 = new THREE.Vector3(5, 3, 2);      // 3. Edu/Skills
+    const p4 = new THREE.Vector3(8, 0, -2);     // 4. Exp 1
+    const p5 = new THREE.Vector3(4, -4, -6);    // 5. Exp 2
+    const p6 = new THREE.Vector3(-4, -2, -8);   // 6. Proj 1
+    const p7 = new THREE.Vector3(-8, 3, -4);    // 7. Proj 2
+    const p8 = new THREE.Vector3(-6, -3, 2);    // 8. Social 1
+    const p9 = new THREE.Vector3(4, 5, 5);      // 9. Social 2
+    const p10 = new THREE.Vector3(-6, 6, 2);    // 10. Achievements
+    const p11 = new THREE.Vector3(3, -2, 6);    // 11. Hobbies
+    const p12 = new THREE.Vector3(0, 0, -3);    // 12. Contact
 
-    const points = [p1, p2, p3, p4, p5, p6, p7, p8];
-    const segment = 1 / (points.length - 1); // 1/7
+    const points = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12];
+    const segment = 1 / (points.length - 1); 
     
     let index = Math.floor(offset / segment);
     if (index >= points.length - 1) index = points.length - 2;
@@ -68,7 +72,7 @@ export function Scene() {
         <ambientLight intensity={0.2} />
         <pointLight position={[0, 0, 0]} intensity={2} color="#3b82f6" />
         
-        <ScrollControls pages={8} damping={0.1}>
+        <ScrollControls pages={12} damping={0.1}>
           
           <CameraAnimation />
 
