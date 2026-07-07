@@ -18,7 +18,7 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
     return () => clearInterval(interval);
   }, []);
 
-  const navItems: PageSection[] = ['Home', 'Vision', 'Experience', 'Projects', 'Activities', 'Awards', 'Hobbies', 'Contact'];
+  const navItems: PageSection[] = ['Home', 'Vision', 'Experience', 'Projects', 'Thesis', 'Activities', 'Awards', 'Hobbies', 'Contact'];
 
   const panelStyle = {
     background: "rgba(15, 15, 20, 0.6)",
@@ -271,6 +271,60 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
                 </div>
               </div>
 
+            </div>
+          </motion.section>
+        )}
+
+        {currentPage === 'Thesis' && (
+          <motion.section key="thesis" variants={pageVariants} initial="initial" animate="animate" exit="exit" style={containerStyle}>
+            <div style={{...panelStyle, maxWidth: "1000px"}}>
+              <h2 className="text-gradient" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", marginBottom: "1.5rem", textAlign: "center", lineHeight: 1.3 }}>MÔ HÌNH NGỮ NGHĨA TRỪU TƯỢNG TRONG DỊCH MÁY VIỆT-ANH<br/><span style={{fontSize: "1.2rem", color: "var(--text-secondary)"}}>TRÊN MIỀN TƯ LIỆU CỔ</span></h2>
+              
+              <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+                
+                <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap", alignItems: "center" }}>
+                  <img src="/image/thesis/amr_graph_1783426364334.png" style={{ width: "300px", borderRadius: "12px", objectFit: "cover", border: "1px solid rgba(255,255,255,0.1)", flexShrink: 0 }} />
+                  <div style={{ flex: 1, minWidth: "300px" }}>
+                    <h3 style={{ color: "#3b82f6", marginBottom: "0.5rem" }}>The Problem: Translation of Classical Texts</h3>
+                    <p style={{ color: "var(--text-secondary)", fontSize: "1rem", lineHeight: 1.6 }}>
+                      Dịch thuật tự động cho các tác phẩm văn học cổ điển Trung Hoa (Tứ Đại Danh Tác) sang tiếng Việt và tiếng Anh gặp nhiều thách thức lớn do <strong>hiện tượng lược bỏ chủ ngữ (pro-drop)</strong> và cấu trúc ngữ pháp Hán-Việt phức tạp. Các mô hình ngôn ngữ lớn (LLM) hiện đại thường dịch sai ngữ nghĩa hoặc mất bối cảnh khi xử lý các dữ liệu này.
+                    </p>
+                  </div>
+                </div>
+
+                <hr style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }} />
+
+                <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap", alignItems: "center", flexDirection: "row-reverse" }}>
+                  <img src="/image/thesis/saft_architecture_1783426375243.png" style={{ width: "300px", borderRadius: "12px", objectFit: "cover", border: "1px solid rgba(255,255,255,0.1)", flexShrink: 0 }} />
+                  <div style={{ flex: 1, minWidth: "300px" }}>
+                    <h3 style={{ color: "#8b5cf6", marginBottom: "0.5rem" }}>The Solution: Structure-Aware Fine-Tuning (SAFT)</h3>
+                    <p style={{ color: "var(--text-secondary)", fontSize: "1rem", lineHeight: 1.6 }}>
+                      Chúng tôi đề xuất kiến trúc <strong>SAFT</strong> tích hợp biểu diễn đồ thị <strong>Abstract Meaning Representation (AMR)</strong> vào mô hình Qwen2.5. Bằng cách sử dụng <em>Magnetic Laplacian Eigenvectors</em> để tạo vector nhúng vị trí (BFS-PE) và đưa qua một mạng MLP nhỏ vào tầng embedding, hệ thống có thể hiểu sâu sắc cấu trúc câu mà chỉ tăng <strong>≈ 1.18%</strong> tham số tính toán.
+                    </p>
+                  </div>
+                </div>
+
+                <hr style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }} />
+
+                <div>
+                  <h3 style={{ color: "#fff", marginBottom: "1rem", textAlign: "center" }}>Key Contributions</h3>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
+                    <div style={{ background: "rgba(59, 130, 246, 0.1)", padding: "1rem 1.5rem", borderRadius: "8px", border: "1px solid rgba(59, 130, 246, 0.3)", flex: "1 1 200px", textAlign: "center" }}>
+                      <h4 style={{ color: "#fff", margin: "0 0 0.5rem 0" }}>ViAMR Dataset</h4>
+                      <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", margin: 0 }}>Xây dựng bộ dữ liệu AMR đầu tiên cho tiếng Việt với <strong>22.055 đồ thị</strong> chất lượng cao.</p>
+                    </div>
+                    <div style={{ background: "rgba(139, 92, 246, 0.1)", padding: "1rem 1.5rem", borderRadius: "8px", border: "1px solid rgba(139, 92, 246, 0.3)", flex: "1 1 200px", textAlign: "center" }}>
+                      <h4 style={{ color: "#fff", margin: "0 0 0.5rem 0" }}>AMR Parser</h4>
+                      <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", margin: 0 }}>Fine-tune mô hình AMRBART chuyên biệt cho phân tích cú pháp tiếng Việt.</p>
+                    </div>
+                    <div style={{ background: "rgba(16, 185, 129, 0.1)", padding: "1rem 1.5rem", borderRadius: "8px", border: "1px solid rgba(16, 185, 129, 0.3)", flex: "1 1 200px", textAlign: "center" }}>
+                      <h4 style={{ color: "#fff", margin: "0 0 0.5rem 0" }}>State-of-the-Art</h4>
+                      <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", margin: 0 }}>Cải thiện đáng kể điểm <strong>BLEU và COMET</strong>, tạo benchmark mới cho dịch máy ngữ liệu cổ.</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </motion.section>
         )}

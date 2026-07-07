@@ -28,6 +28,10 @@ function CameraAnimation({ currentPage }: { currentPage: PageSection }) {
         targetPos.set(-5, -2, -6);
         lookTarget.set(-2, -1, -3);
         break;
+      case 'Thesis':
+        targetPos.set(0, 6, -5);
+        lookTarget.set(0, 2, -2);
+        break;
       case 'Activities':
         targetPos.set(4, 5, 2);
         lookTarget.set(1, 2, 1);

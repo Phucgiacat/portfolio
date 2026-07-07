@@ -9,7 +9,7 @@ const Scene = dynamic(() => import('@/components/Scene').then((mod) => mod.Scene
   ssr: false,
 });
 
-export type PageSection = 'Home' | 'Vision' | 'Experience' | 'Projects' | 'Activities' | 'Awards' | 'Hobbies' | 'Contact';
+export type PageSection = 'Home' | 'Vision' | 'Experience' | 'Projects' | 'Thesis' | 'Activities' | 'Awards' | 'Hobbies' | 'Contact';
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState<PageSection>("Home");
