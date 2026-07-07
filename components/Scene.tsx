@@ -1,93 +1,87 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { ScrollControls, Scroll, useScroll } from "@react-three/drei";
 import { EffectComposer, Bloom, Noise, Vignette } from "@react-three/postprocessing";
 import { NeuralNetwork } from "./NeuralNetwork";
 import { FloatingObjects } from "./FloatingObjects";
-import { OverlayUI } from "./OverlayUI";
 import * as THREE from "three";
+import { PageSection } from "@/app/page";
 
-// Component to handle camera animation based on scroll
-function CameraAnimation() {
-  const scroll = useScroll();
-  
+// Component to handle camera animation based on current page
+function CameraAnimation({ currentPage }: { currentPage: PageSection }) {
   useFrame((state) => {
-    const offset = scroll.offset; // 0 to 1 over 8 pages
     
-    // Abstract space camera positions for 12 sections
-    const p1 = new THREE.Vector3(0, 0, 4);      // 1. Hero
-    const p2 = new THREE.Vector3(-4, 2, 2);     // 2. Vision / Personality
-    const p3 = new THREE.Vector3(5, 3, 2);      // 3. Edu/Skills
-    const p4 = new THREE.Vector3(8, 0, -2);     // 4. Exp 1
-    const p5 = new THREE.Vector3(4, -4, -6);    // 5. Exp 2
-    const p6 = new THREE.Vector3(-4, -2, -8);   // 6. Proj 1
-    const p7 = new THREE.Vector3(-8, 3, -4);    // 7. Proj 2
-    const p8 = new THREE.Vector3(-6, -3, 2);    // 8. Social 1
-    const p9 = new THREE.Vector3(4, 5, 5);      // 9. Social 2
-    const p10 = new THREE.Vector3(-6, 6, 2);    // 10. Achievements
-    const p11 = new THREE.Vector3(3, -2, 6);    // 11. Hobbies
-    const p12 = new THREE.Vector3(0, 0, -3);    // 12. Contact
+    // Abstract space camera positions for each section
+    let targetPos = new THREE.Vector3(0, 0, 4); // Home
+    let lookTarget = new THREE.Vector3(0, 0, 0);
 
-    const points = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12];
-    const segment = 1 / (points.length - 1); 
-    
-    let index = Math.floor(offset / segment);
-    if (index >= points.length - 1) index = points.length - 2;
-    
-    const t = (offset - index * segment) / segment;
-    
-    let targetPos = new THREE.Vector3();
-    targetPos.lerpVectors(points[index], points[index + 1], t);
+    switch (currentPage) {
+      case 'Vision':
+        targetPos.set(-4, 2, 2);
+        lookTarget.set(-2, 1, 0);
+        break;
+      case 'Experience':
+        targetPos.set(6, 2, -2);
+        lookTarget.set(2, 0, -1);
+        break;
+      case 'Projects':
+        targetPos.set(-5, -2, -6);
+        lookTarget.set(-2, -1, -3);
+        break;
+      case 'Activities':
+        targetPos.set(4, 5, 2);
+        lookTarget.set(1, 2, 1);
+        break;
+      case 'Awards':
+        targetPos.set(-6, 4, 2);
+        lookTarget.set(-2, 2, 0);
+        break;
+      case 'Hobbies':
+        targetPos.set(3, -3, 5);
+        lookTarget.set(1, -1, 2);
+        break;
+      case 'Contact':
+        targetPos.set(0, 0, -3);
+        lookTarget.set(0, 0, 0);
+        break;
+      default:
+        targetPos.set(0, 0, 4);
+        lookTarget.set(0, 0, 0);
+        break;
+    }
 
     // MOUSE PARALLAX: Add subtle sway based on mouse position
-    const mouseX = (state.pointer.x * Math.PI) / 8;
-    const mouseY = (state.pointer.y * Math.PI) / 8;
+    const mouseX = (state.pointer.x * Math.PI) / 10;
+    const mouseY = (state.pointer.y * Math.PI) / 10;
     targetPos.x += mouseX;
     targetPos.y += mouseY;
 
-    state.camera.position.lerp(targetPos, 0.05);
+    // Smooth movement
+    state.camera.position.lerp(targetPos, 0.03);
 
-    // Dynamic LookAt focusing on center but swaying
-    const lookAtPos = new THREE.Vector3(
-      Math.sin(offset * Math.PI * 4) * 2, 
-      Math.cos(offset * Math.PI * 4) * 2, 
-      Math.sin(offset * Math.PI * 2) * 2
-    );
-    
-    let targetLookAt = new THREE.Vector3();
-    targetLookAt.lerpVectors(new THREE.Vector3(0,0,0), lookAtPos, 0.3);
-    state.camera.lookAt(targetLookAt);
+    // Smooth LookAt
+    let currentLookAt = new THREE.Vector3(0, 0, -1).applyQuaternion(state.camera.quaternion).add(state.camera.position);
+    currentLookAt.lerp(lookTarget, 0.03);
+    state.camera.lookAt(currentLookAt);
   });
 
   return null;
 }
 
-export function Scene() {
+export function Scene({ currentPage }: { currentPage: PageSection }) {
   return (
-    <div id="canvas-container">
+    <div id="canvas-container" style={{ width: '100%', height: '100%' }}>
       <Canvas camera={{ position: [0, 0, 4], fov: 60 }}>
         <color attach="background" args={['#030303']} />
         
         <ambientLight intensity={0.2} />
         <pointLight position={[0, 0, 0]} intensity={2} color="#3b82f6" />
         
-        <ScrollControls pages={12} damping={0.1}>
-          
-          <CameraAnimation />
+        <CameraAnimation currentPage={currentPage} />
 
-          <Scroll>
-            {/* The 3D Neural Network */}
-            <NeuralNetwork />
-            <FloatingObjects />
-          </Scroll>
-
-          <Scroll html style={{ width: '100%' }}>
-            {/* The HTML UI Overlay */}
-            <OverlayUI />
-          </Scroll>
-
-        </ScrollControls>
+        {/* The 3D Neural Network */}
+        <NeuralNetwork />
+        <FloatingObjects />
 
         {/* Cinematic Post-Processing */}
         <EffectComposer>
