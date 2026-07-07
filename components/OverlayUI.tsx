@@ -66,24 +66,23 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
         style={{
           position: "fixed",
           top: "20px",
-          left: "50%",
-          transform: "translateX(-50%)",
+          left: 0,
+          right: 0,
+          margin: "0 auto",
+          width: "fit-content",
+          maxWidth: "95vw",
           background: "rgba(10,10,15,0.7)",
           backdropFilter: "blur(10px)",
           border: "1px solid rgba(255,255,255,0.1)",
-          padding: "10px 20px",
+          padding: "8px 15px",
           borderRadius: "30px",
           display: "flex",
-          gap: "15px",
+          gap: "8px",
           zIndex: 1000,
           boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-          pointerEvents: "auto", // make nav clickable
-          flexWrap: "nowrap",
-          overflowX: "auto",
-          maxWidth: "95vw",
-          scrollbarWidth: "none", // Firefox
-          justifyContent: "flex-start",
-          WebkitOverflowScrolling: "touch"
+          pointerEvents: "auto",
+          flexWrap: "wrap",
+          justifyContent: "center"
         }}
       >
         {navItems.map((item) => {
@@ -95,14 +94,13 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
               style={{ 
                 color: isActive ? "#fff" : "#94a3b8", 
                 cursor: "pointer", 
-                fontSize: "0.9rem", 
+                fontSize: "0.85rem", 
                 fontWeight: isActive ? 600 : 400,
                 padding: "5px 10px",
                 borderRadius: "15px",
                 background: isActive ? "rgba(59, 130, 246, 0.3)" : "transparent",
                 transition: "all 0.3s ease",
-                whiteSpace: "nowrap",
-                flexShrink: 0
+                whiteSpace: "nowrap"
               }}
               onMouseOver={(e) => {
                 if (!isActive) e.currentTarget.style.color = '#fff';
