@@ -78,8 +78,12 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
           zIndex: 1000,
           boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
           pointerEvents: "auto", // make nav clickable
-          flexWrap: "wrap",
-          justifyContent: "center"
+          flexWrap: "nowrap",
+          overflowX: "auto",
+          maxWidth: "95vw",
+          scrollbarWidth: "none", // Firefox
+          justifyContent: "flex-start",
+          WebkitOverflowScrolling: "touch"
         }}
       >
         {navItems.map((item) => {
