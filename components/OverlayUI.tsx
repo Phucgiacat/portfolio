@@ -1,16 +1,25 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { PageSection } from "@/app/page";
 import { translations } from "@/lib/translations";
 
-export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSection, setCurrentPage: (page: PageSection) => void }) {
+export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSection, setCurrentPage: React.Dispatch<React.SetStateAction<PageSection>> }) {
   const [typedText, setTypedText] = useState("");
   const [language, setLanguage] = useState<'en' | 'vi'>('en'); // Default is English
+  const [isMobile, setIsMobile] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const fullText = "AI Engineer & Data Scientist_";
   
+  const navItems: PageSection[] = ['Home', 'Vision', 'Experience', 'Projects', 'Thesis', 'Activities', 'Awards', 'Hobbies', 'Contact'];
+
+  const isMenuOpenRef = useRef(isMenuOpen);
+  useEffect(() => {
+    isMenuOpenRef.current = isMenuOpen;
+  }, [isMenuOpen]);
+
   useEffect(() => {
     let i = 0;
     const interval = setInterval(() => {
@@ -21,7 +30,53 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
     return () => clearInterval(interval);
   }, []);
 
-  const navItems: PageSection[] = ['Home', 'Vision', 'Experience', 'Projects', 'Thesis', 'Activities', 'Awards', 'Hobbies', 'Contact'];
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX = e.changedTouches[0].screenX;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    };
+
+    const handleSwipe = () => {
+      if (isMenuOpenRef.current) return;
+      const distance = touchStartX - touchEndX;
+      const minSwipeDistance = 50;
+      
+      if (distance > minSwipeDistance) {
+        setCurrentPage((prev) => {
+          const currentIndex = navItems.indexOf(prev);
+          if (currentIndex < navItems.length - 1) return navItems[currentIndex + 1];
+          return prev;
+        });
+      } else if (distance < -minSwipeDistance) {
+        setCurrentPage((prev) => {
+          const currentIndex = navItems.indexOf(prev);
+          if (currentIndex > 0) return navItems[currentIndex - 1];
+          return prev;
+        });
+      }
+    };
+
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchend', handleTouchEnd);
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);
 
   const t = translations[language];
 
@@ -62,88 +117,106 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
 
   return (
     <>
-      <motion.nav 
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-        style={{
-          position: "fixed",
-          top: "20px",
-          left: 0,
-          right: 0,
-          margin: "0 auto",
-          width: "fit-content",
-          maxWidth: "95vw",
-          background: "rgba(10,10,15,0.7)",
-          backdropFilter: "blur(10px)",
-          border: "1px solid rgba(255,255,255,0.1)",
-          padding: "8px 15px",
-          borderRadius: "30px",
-          display: "flex",
-          gap: "8px",
-          zIndex: 1000,
-          boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-          pointerEvents: "auto",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
-        {navItems.map((item) => {
-          const isActive = currentPage === item;
-          return (
-            <span 
-              key={item} 
-              onClick={() => setCurrentPage(item)}
-              style={{ 
-                color: isActive ? "#fff" : "#94a3b8", 
-                cursor: "pointer", 
-                fontSize: "0.85rem", 
-                fontWeight: isActive ? 600 : 400,
-                padding: "5px 10px",
-                borderRadius: "15px",
-                background: isActive ? "rgba(59, 130, 246, 0.3)" : "transparent",
-                transition: "all 0.3s ease",
-                whiteSpace: "nowrap"
-              }}
-              onMouseOver={(e) => {
-                if (!isActive) e.currentTarget.style.color = '#fff';
-              }}
-              onMouseOut={(e) => {
-                if (!isActive) e.currentTarget.style.color = '#94a3b8';
-              }}
-            >
-              {t.nav[item as keyof typeof t.nav]}
-            </span>
-          )
-        })}
-        <div style={{ borderLeft: "1px solid rgba(255,255,255,0.2)", height: "20px", margin: "0 4px" }} />
-        <span
-          onClick={() => setLanguage(language === 'en' ? 'vi' : 'en')}
+      {isMobile ? (
+        <>
+          <div 
+            style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 2000, pointerEvents: 'auto', background: 'rgba(10,10,15,0.7)', padding: '10px', borderRadius: '8px', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.1)' }}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <div style={{ width: '25px', height: '3px', background: '#fff', margin: '5px 0', transition: '0.4s', transform: isMenuOpen ? 'rotate(-45deg) translate(-5px, 6px)' : '' }}></div>
+            <div style={{ width: '25px', height: '3px', background: '#fff', margin: '5px 0', transition: '0.4s', opacity: isMenuOpen ? 0 : 1 }}></div>
+            <div style={{ width: '25px', height: '3px', background: '#fff', margin: '5px 0', transition: '0.4s', transform: isMenuOpen ? 'rotate(45deg) translate(-5px, -6px)' : '' }}></div>
+          </div>
+
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'tween', duration: 0.3 }}
+                style={{
+                  position: 'fixed', top: 0, right: 0, width: '250px', height: '100vh', background: 'rgba(15, 15, 20, 0.95)',
+                  backdropFilter: 'blur(12px)', zIndex: 1999, pointerEvents: 'auto', display: 'flex', flexDirection: 'column',
+                  padding: '80px 20px 20px', gap: '15px', borderLeft: '1px solid rgba(255,255,255,0.1)'
+                }}
+              >
+                {navItems.map((item) => (
+                  <span
+                    key={item}
+                    onClick={() => { setCurrentPage(item); setIsMenuOpen(false); }}
+                    style={{
+                      color: currentPage === item ? '#fff' : '#94a3b8',
+                      fontSize: '1.2rem', fontWeight: currentPage === item ? 600 : 400,
+                      cursor: 'pointer', padding: '10px', borderRadius: '8px',
+                      background: currentPage === item ? 'rgba(59, 130, 246, 0.3)' : 'transparent'
+                    }}
+                  >
+                    {t.nav[item as keyof typeof t.nav]}
+                  </span>
+                ))}
+                <div style={{ borderTop: "1px solid rgba(255,255,255,0.2)", margin: "10px 0" }} />
+                <span
+                  onClick={() => { setLanguage(language === 'en' ? 'vi' : 'en'); setIsMenuOpen(false); }}
+                  style={{
+                    color: "#fff", cursor: "pointer", fontSize: "1.2rem", fontWeight: 600, padding: "10px",
+                    borderRadius: "8px", background: "linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(139, 92, 246, 0.5))",
+                    textAlign: "center"
+                  }}
+                >
+                  🌐 {language === 'en' ? 'EN' : 'VI'}
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
+      ) : (
+        <motion.nav 
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
           style={{
-            color: "#fff",
-            cursor: "pointer",
-            fontSize: "0.85rem",
-            fontWeight: 600,
-            padding: "5px 10px",
-            borderRadius: "15px",
-            background: "linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(139, 92, 246, 0.5))",
-            transition: "all 0.3s ease",
-            whiteSpace: "nowrap",
-            display: "flex",
-            alignItems: "center",
-            gap: "5px"
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.transform = "scale(1.05)";
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.transform = "scale(1)";
+            position: "fixed", top: "20px", left: 0, right: 0, margin: "0 auto", width: "fit-content",
+            maxWidth: "95vw", background: "rgba(10,10,15,0.7)", backdropFilter: "blur(10px)",
+            border: "1px solid rgba(255,255,255,0.1)", padding: "8px 15px", borderRadius: "30px",
+            display: "flex", gap: "8px", zIndex: 1000, boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+            pointerEvents: "auto", flexWrap: "wrap", justifyContent: "center", alignItems: "center"
           }}
         >
-          🌐 {language === 'en' ? 'EN' : 'VI'}
-        </span>
-      </motion.nav>
+          {navItems.map((item) => {
+            const isActive = currentPage === item;
+            return (
+              <span 
+                key={item} 
+                onClick={() => setCurrentPage(item)}
+                style={{ 
+                  color: isActive ? "#fff" : "#94a3b8", cursor: "pointer", fontSize: "0.85rem", 
+                  fontWeight: isActive ? 600 : 400, padding: "5px 10px", borderRadius: "15px",
+                  background: isActive ? "rgba(59, 130, 246, 0.3)" : "transparent",
+                  transition: "all 0.3s ease", whiteSpace: "nowrap"
+                }}
+                onMouseOver={(e) => { if (!isActive) e.currentTarget.style.color = '#fff'; }}
+                onMouseOut={(e) => { if (!isActive) e.currentTarget.style.color = '#94a3b8'; }}
+              >
+                {t.nav[item as keyof typeof t.nav]}
+              </span>
+            )
+          })}
+          <div style={{ borderLeft: "1px solid rgba(255,255,255,0.2)", height: "20px", margin: "0 4px" }} />
+          <span
+            onClick={() => setLanguage(language === 'en' ? 'vi' : 'en')}
+            style={{
+              color: "#fff", cursor: "pointer", fontSize: "0.85rem", fontWeight: 600, padding: "5px 10px",
+              borderRadius: "15px", background: "linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(139, 92, 246, 0.5))",
+              transition: "all 0.3s ease", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "5px"
+            }}
+            onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+            onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
+            🌐 {language === 'en' ? 'EN' : 'VI'}
+          </span>
+        </motion.nav>
+      )}
 
       <AnimatePresence mode="wait">
         {currentPage === 'Home' && (
@@ -166,7 +239,7 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
                   <motion.a 
                     whileHover={{ scale: 1.05, boxShadow: "0 0 15px var(--accent-glow)" }}
                     whileTap={{ scale: 0.95 }}
-                    href="/Bui_Hong_Phuc_CV.pdf" 
+                    href="/Bùi Hồng Phúc _ CV.pdf" 
                     target="_blank" 
                     style={{ display: "inline-block", padding: "0.8rem 1.5rem", background: "var(--accent-color)", color: "#fff", borderRadius: "8px", fontWeight: "bold", textDecoration: "none" }}
                   >
@@ -221,7 +294,7 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
                 ];
                 return (
                   <div key={idx} style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", background: "rgba(255,255,255,0.03)", padding: "1.5rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.1)" }}>
-                    <img src={images[idx]} style={{ width: "220px", height: "150px", objectFit: "cover", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.2)" }} />
+                    <img src={images[idx % images.length]} style={{ width: "220px", height: "150px", objectFit: "cover", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.2)" }} />
                     <div style={{ flex: 1, minWidth: "250px" }}>
                       <h3 style={{ fontSize: "1.2rem", color: "#fff", display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
                         {proj.title}
@@ -403,7 +476,7 @@ export function OverlayUI({ currentPage, setCurrentPage }: { currentPage: PageSe
               <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
                 <a href="mailto:duyphuc2425@gmail.com" style={{ padding: "0.8rem 1.5rem", background: "var(--accent-color)", color: "#fff", borderRadius: "30px", fontWeight: 600, textDecoration: "none" }}>{t.contact.email}</a>
                 <a href="https://github.com/Phucgiacat" target="_blank" rel="noreferrer" style={{ padding: "0.8rem 1.5rem", background: "rgba(255,255,255,0.1)", color: "#fff", borderRadius: "30px", fontWeight: 600, border: "1px solid rgba(255,255,255,0.2)", textDecoration: "none" }}>{t.contact.github}</a>
-                <a href="/Bui_Hong_Phuc_CV.pdf" target="_blank" style={{ padding: "0.8rem 1.5rem", background: "rgba(255,255,255,0.1)", color: "#fff", borderRadius: "30px", fontWeight: 600, border: "1px solid rgba(255,255,255,0.2)", textDecoration: "none" }}>{t.contact.cv}</a>
+                <a href="/Bùi Hồng Phúc _ CV.pdf" target="_blank" style={{ padding: "0.8rem 1.5rem", background: "rgba(255,255,255,0.1)", color: "#fff", borderRadius: "30px", fontWeight: 600, border: "1px solid rgba(255,255,255,0.2)", textDecoration: "none" }}>{t.contact.cv}</a>
               </div>
             </div>
           </motion.section>

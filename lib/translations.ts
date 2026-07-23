@@ -67,7 +67,18 @@ export const translations = {
           bullets: [
             "Built an AI agent that automates SQL querying and financial-report generation across enterprise databases, cutting manual data-retrieval time by 40%.",
             "Integrated the agent with internal dashboards and led a 2-person team to define business use cases.",
-            "<strong>Tech:</strong> OpenClaw, Python, SQL, LangChain, LLM APIs"
+            "<strong>Tech:</strong> OpenClaw, Python, SQL, LangChain, LLM APIs",
+            "<strong>Link:</strong> <a href=\"https://github.com/Phucgiacat/Enterprise_Database_Reporting_Automation\" target=\"_blank\" style=\"color: #3b82f6\">github.com/Phucgiacat/Enterprise_Database_Reporting_Automation</a>"
+          ]
+        },
+        {
+          title: "Home Credit - Credit Risk Model Stability",
+          date: "2024",
+          bullets: [
+            "Built and evaluated gradient-boosting models to predict client repayment, holding performance stable as data distributions shifted over time.",
+            "Ran EDA and feature engineering on large, imbalanced financial data to surface meaningful credit-risk signals.",
+            "<strong>Tech:</strong> Python, pandas, scikit-learn, LightGBM, XGBoost",
+            "<strong>Link:</strong> <a href=\"https://github.com/Phucgiacat/Credit_Risk_Model-_Stability\" target=\"_blank\" style=\"color: #3b82f6\">github.com/Phucgiacat/Credit_Risk_Model-_Stability</a>"
           ]
         },
         {
@@ -235,7 +246,18 @@ export const translations = {
           bullets: [
             "Xây dựng một AI agent tự động hóa việc truy vấn SQL và tạo báo cáo tài chính trên các cơ sở dữ liệu doanh nghiệp, giảm 40% thời gian trích xuất dữ liệu thủ công.",
             "Tích hợp agent với bảng điều khiển nội bộ và dẫn dắt nhóm 2 người xác định các use-case kinh doanh.",
-            "<strong>Công nghệ:</strong> OpenClaw, Python, SQL, LangChain, LLM APIs"
+            "<strong>Công nghệ:</strong> OpenClaw, Python, SQL, LangChain, LLM APIs",
+            "<strong>Link:</strong> <a href=\"https://github.com/Phucgiacat/Enterprise_Database_Reporting_Automation\" target=\"_blank\" style=\"color: #3b82f6\">github.com/Phucgiacat/Enterprise_Database_Reporting_Automation</a>"
+          ]
+        },
+        {
+          title: "Home Credit - Mô hình Đánh giá Rủi ro Tín dụng",
+          date: "2024",
+          bullets: [
+            "Xây dựng và đánh giá các mô hình gradient-boosting để dự đoán khả năng trả nợ của khách hàng, duy trì hiệu suất ổn định khi phân phối dữ liệu thay đổi theo thời gian.",
+            "Thực hiện EDA và kỹ nghệ đặc trưng trên dữ liệu tài chính lớn, mất cân bằng để tìm ra các tín hiệu rủi ro tín dụng có ý nghĩa.",
+            "<strong>Công nghệ:</strong> Python, pandas, scikit-learn, LightGBM, XGBoost",
+            "<strong>Link:</strong> <a href=\"https://github.com/Phucgiacat/Credit_Risk_Model-_Stability\" target=\"_blank\" style=\"color: #3b82f6\">github.com/Phucgiacat/Credit_Risk_Model-_Stability</a>"
           ]
         },
         {
